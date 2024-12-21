@@ -82,7 +82,7 @@ LoadPalette PROC
 
 	; Start at palette address 0
 	mov dx, 3C8h
-	mov al, 0h
+	xor al, al
 	out dx, al
 	
 	; Write all palette entries
@@ -159,7 +159,7 @@ DarkenPixel MACRO
 	
 	sub al, FIRE_PIXEL_RUN_LENGTH
 	jnc DarkenPixel_FinishDarken
-	mov al, 0
+	xor al, al
 	
 DarkenPixel_FinishDarken:
 ENDM
@@ -182,7 +182,7 @@ UpdateFireRow PROC
 	
 	; The first pixel is a special case
 	; Sum the pixel
-	mov dh, 0
+	xor dh, dh
 	
 	mov cl, [ds:di]
 	inc di
@@ -280,7 +280,7 @@ SeedFire_Loop:
 	
 	; Seed with 0
 SeedFire_Zero:
-	mov dl, 0
+	xor dl, dl
 	mov [ds:bx], dl
 
 SeedFire_Continue:
@@ -355,7 +355,7 @@ WaitForVSync ENDP
 
 ; Copies fire pixels from the flame buffer to the screen
 CopyFirePixels PROC
-	mov di, 0
+	xor di, di
 	mov bx, OFFSET flameBuffer
 
 	mov dx, FLAME_BUFFER_WIDTH
